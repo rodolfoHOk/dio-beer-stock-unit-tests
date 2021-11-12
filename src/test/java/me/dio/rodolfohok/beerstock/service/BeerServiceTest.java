@@ -27,14 +27,11 @@ import static org.mockito.Mockito.*;
 public class BeerServiceTest {
 
   private static final long INVALID_BEER_ID = 2L;
-
+  private final BeerMapper beerMapper = BeerMapper.INSTANCE;
   @Mock
   private BeerRepository beerRepository;
-
   @InjectMocks
   private BeerService beerService;
-
-  private final BeerMapper beerMapper = BeerMapper.INSTANCE;
 
   @Test
   void whenBeerInformedThenItShouldBeCreated() throws BeerAlreadyRegisteredException {
@@ -239,12 +236,13 @@ public class BeerServiceTest {
     assertThrows(BeerStockExceededException.class, () -> beerService.decrement(expectedBeerDTO.getId(), quantityToDecrement));
   }
 
-//    @Test
-//    void whenDecrementIsCalledWithInvalidIdThenThrowException() {
-//        int quantityToDecrement = 10;
-//
-//        when(beerRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
-//
-//        assertThrows(BeerNotFoundException.class, () -> beerService.decrement(INVALID_BEER_ID, quantityToDecrement));
-//    }
+  @Test
+  void whenDecrementIsCalledWithInvalidIdThenThrowException() {
+    // given
+    int quantityToDecrement = 10;
+    // when
+    when(beerRepository.findById(INVALID_BEER_ID)).thenReturn(Optional.empty());
+    // then
+    assertThrows(BeerNotFoundException.class, () -> beerService.decrement(INVALID_BEER_ID, quantityToDecrement));
+  }
 }
