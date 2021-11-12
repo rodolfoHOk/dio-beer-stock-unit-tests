@@ -7,7 +7,6 @@ import me.dio.rodolfohok.beerstock.exception.BeerAlreadyRegisteredException;
 import me.dio.rodolfohok.beerstock.exception.BeerNotFoundException;
 import me.dio.rodolfohok.beerstock.mapper.BeerMapper;
 import me.dio.rodolfohok.beerstock.repository.BeerRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -93,9 +92,5 @@ public class BeerServiceTest {
     when(beerRepository.findByName(expectedFoundBeerDTO.getName())).thenReturn(Optional.empty());
     // then
     assertThrows(BeerNotFoundException.class, () -> beerService.findByName(expectedFoundBeerDTO.getName()));
-  }
-
-  @Test
-  void name() {
   }
 }
